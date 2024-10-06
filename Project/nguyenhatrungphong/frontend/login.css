@@ -1,0 +1,37 @@
+body{
+    background-color: #f8f9fa;
+}
+
+.card{
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0 15px  rgba(0,0,0,0.1);
+}
+.form-container{
+    max-width: 400px;
+    margin: 2rem auto;
+}
+.logo{
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    background-color: #3498db;
+    border-radius: 50%;
+}
+.btn-primary{
+    background-color: #3498db;
+    border: none;
+    padding: 0.8rem;
+}
+.btn-primary:hover{
+    background-color: #2980b9;
+}
+.form-control:focus{
+    box-shadow: none;
+    border-color: #3498db;
+}
+.switch-form{
+    color: #3498db;
+    cursor: pointer;
+    text-decoration: underline;
+}
