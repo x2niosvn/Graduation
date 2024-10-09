@@ -3,24 +3,17 @@ body {
 }
 
 
-/* .hero-section {
-    background-image: url('AI.png');
-    background-size: 100% 120%; 
-    background-position: center;
-    color: white;
-    padding: 100px 0;
-    position: relative;
-} */
+
 .hero-section {
     background-image: url('AI.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: white;
-    padding: 100px 0; /* Giữ padding dưới */
-    padding-top: 120px; /* Thêm padding trên để lùi nội dung xuống */
+    padding: 100px 0; 
+    padding-top: 120px; 
     position: relative;
-    min-height: 650px; /* Chiều cao tối thiểu */
+    min-height: 650px; 
 }
 
 
