@@ -1,67 +1,65 @@
-<x-app-layout>
-    {{-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile Wireframe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link href="p&h.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+</head>
+<body>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+
+
+    
+    <nav class="navbar navbar-expand-lg navbar-light container" style="border-bottom: 2px solid #000; padding-bottom: 10px;">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="/" style="text-decoration: none;">
+                <img src="logobtec.png" alt="Logo" width="150px" class="mr-4">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Contact</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div> --}}
-
-
-
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            @include('profile.partials.update-profile-information-form')
-        </div>
-
-        <div class="col-md-6 mb-4">
-            @include('profile.partials.update-password-form')
-        </div>
-    </div>
-
-    <div class="row">
-            @include('profile.partials.delete-user-form')
-    </div>
-
-</x-app-layout>
-
-
-
-
-
-
+    </nav>
+    
     
       
     
-{{--     
+    
         
-
+    <div class="container mt-5">
         <div class="row">
             <!-- User Profile Section -->
             <div class="col-md-6 mb-4">
                 <div class="card" style="background-color: #f8f9fa; color: #343a40; border: 1px solid #0056b3; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);">
                     <div class="container mb-4 mt-4">
-                        <h2 class="text-center mb-4" style="color:#0056b3;">Update User Profile</h2>
+                        <h2 class="text-center mb-4" style="color:#0056b3;">User Profile</h2>
                         <hr style="background-color: #000; height: 2px;">
                         <!-- Profile Picture -->
                         <div class="text-center mb-3">
@@ -163,6 +161,7 @@
                 </div>
             </div>
         </div>
+    </div>
     
     
     
@@ -172,5 +171,9 @@
         $(document).ready( function () {
     $('#myTable').DataTable();
     } );
-    </script> --}}
+    </script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
