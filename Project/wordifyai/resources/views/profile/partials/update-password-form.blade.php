@@ -1,48 +1,63 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Update Password') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
-        </p>
-    </header>
-
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
-        @csrf
-        @method('put')
-
-        <div>
-            <x-input-label for="current_password" :value="__('Current Password')" />
-            <x-text-input id="current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+    <div class="card shadow-lg" style="background-color: #f8f9fa; color: #343a40; border: 1px solid #0056b3; border-radius: 10px;">
+        <div class="card-body">
+            <h2 class="text-center mb-4" style="color:#0056b3;">
+                <i class="fas fa-lock"></i> Change Password
+            </h2>
+            <hr style="background-color: #000; height: 2px;">
+    
+            <!-- Change Password Form -->
+            <form method="post" action="{{ route('password.update') }}">
+                @csrf
+                @method('put')
+    
+                <!-- Current Password -->
+                <div class="mb-3">
+                    <label for="current-password" class="form-label"><strong><i class="fas fa-key"></i> Current Password:</strong></label>
+                    <input type="password" class="form-control" id="current-password" name="current_password" placeholder="Enter current password" autocomplete="current-password" required>
+                    @if ($errors->updatePassword->get('current_password'))
+                        <div class="text-danger mt-1">
+                            {{ $errors->updatePassword->first('current_password') }}
+                        </div>
+                    @endif
+                </div>
+    
+                <!-- New Password -->
+                <div class="mb-3">
+                    <label for="new-password" class="form-label"><strong><i class="fas fa-lock"></i> New Password:</strong></label>
+                    <input type="password" class="form-control" id="new-password" name="password" placeholder="Enter new password" autocomplete="new-password" required>
+                    @if ($errors->updatePassword->get('password'))
+                        <div class="text-danger mt-1">
+                            {{ $errors->updatePassword->first('password') }}
+                        </div>
+                    @endif
+                </div>
+    
+                <!-- Confirm New Password -->
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label"><strong><i class="fas fa-lock"></i> Confirm New Password:</strong></label>
+                    <input type="password" class="form-control" id="confirm-password" name="password_confirmation" placeholder="Confirm new password" autocomplete="new-password" required>
+                    @if ($errors->updatePassword->get('password_confirmation'))
+                        <div class="text-danger mt-1">
+                            {{ $errors->updatePassword->first('password_confirmation') }}
+                        </div>
+                    @endif
+                </div>
+    
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button class="btn btn-warning w-100" style="background-color: #ffc107; border-color: #e0a800;">
+                        <i class="fas fa-sync-alt"></i> Change Password
+                    </button>
+                </div>
+    
+                <!-- Success Message -->
+                @if (session('status') === 'password-updated')
+                    <div class="text-center mt-3">
+                        <p class="text-success">{{ __('Password updated successfully.') }}</p>
+                    </div>
+                @endif
+            </form>
         </div>
-
-        <div>
-            <x-input-label for="password" :value="__('New Password')" />
-            <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-        </div>
-
-        <div>
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
-            @endif
-        </div>
-    </form>
+    </div>
 </section>

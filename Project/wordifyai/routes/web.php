@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OpenAIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,15 +39,28 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/user', function () {
         return view('user.dashboard');
     })->name('user.dashboard');
+
+
+    Route::get('/ask-openai', function () {
+        return view('ask-openai-form'); // Hiển thị form
+    });
+    
+    Route::post('/ask-openai', [OpenAIController::class, 'askOpenAI']);
 });
 
 
 
 // Profile cho tất cả user đã đăng nhập
 Route::middleware('auth')->group(function () {
+
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
 
 require __DIR__.'/auth.php';
