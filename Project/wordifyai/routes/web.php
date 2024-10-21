@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenAIController;
+use App\Http\Controllers\EvaluationSituationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,16 +37,31 @@ Route::middleware(['auth', 'role:2'])->group(function () {
 
 //người dùng có vai trò user (role_id = 1)
 Route::middleware(['auth', 'role:1'])->group(function () {
-    Route::get('/user', function () {
-        return view('user.dashboard');
-    })->name('user.dashboard');
+    // Route::get('/user', function () {
+    //     return view('user.dashboard');
+    // })->name('user.dashboard');
 
 
-    Route::get('/ask-openai', function () {
-        return view('ask-openai-form'); // Hiển thị form
-    });
+
+
+
+
+
+
+
+
+
+
+     Route::get('/text-analysis-evaluation', [OpenAIController::class, 'showAnalysisForm'])->name('text-analysis-evaluation');
     
-    Route::post('/ask-openai', [OpenAIController::class, 'askOpenAI']);
+    Route::post('/text-analysis-evaluation', [OpenAIController::class, 'askOpenAI'])->name('ask-openai');
+
+
+    Route::get('/analysis-evaluation-history', [OpenAIController::class, 'showAnalysisEvaluationHistory'])->name('analysis-evaluation-history');
+    Route::get('/analysis-evaluation-history/{id}', [OpenAIController::class, 'getAnalysisDetail']);
+    Route::delete('/analysis-evaluation-history/{id}', [OpenAIController::class, 'destroy']);
+
+
 });
 
 
@@ -53,6 +69,12 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 // Profile cho tất cả user đã đăng nhập
 Route::middleware('auth')->group(function () {
 
+
+
+
+
+
+    
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
