@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\TextAnalysis;  // Thêm import mô hình TextAnalysis
 use App\Models\History;       // Thêm import mô hình History
 
-use App\Models\EvaluationSituation;
 
 
 
@@ -29,10 +28,24 @@ class OpenAIController extends Controller
         $this->openAIService = $openAIService;
     }
 
-    public function askOpenAI(Request $request)
+    public function analysisText(Request $request)
     {
         // Lấy message từ request
         $message = $request->input('message');
+    
+        // Kiểm tra độ dài ký tự (bao gồm cả dấu cách)
+        $messageLength = strlen($message);
+        if ($messageLength > 30000 || $messageLength < 20) {
+            $errorMessage = $messageLength > 30000 
+                ? 'The text is too long. Please provide a text with less than 30,000 characters.' 
+                : 'The text is too short. Please provide a text with at least 20 characters.';
+
+            return response()->json([
+                'success' => false,
+                'error' => $errorMessage,
+            ]);
+        }
+
     
         // Gửi message tới API và nhận phản hồi
         try {
@@ -81,7 +94,7 @@ class OpenAIController extends Controller
                     'history_entry' => 'Analyzed: ' . $message, // Cập nhật lịch sử
                 ]);
             } else {
-                throw new \Exception('Không nhận được phản hồi hợp lệ từ API');
+                throw new \Exception('Can not get valid response from OpenAI API.');
             }
     
         } catch (\Exception $e) {
@@ -94,6 +107,7 @@ class OpenAIController extends Controller
             ]);
         }
     }
+    
     
 
 
@@ -118,6 +132,17 @@ class OpenAIController extends Controller
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
     private function markdowntohtml($text)
     {
         $parsedown = new Parsedown();
@@ -127,10 +152,17 @@ class OpenAIController extends Controller
 
     public function showAnalysisForm()
     {
-        $situations = EvaluationSituation::all(); // Lấy tất cả các tình huống
-        return view('user.aianalyisvealuation', compact('situations')); // Truyền biến đến view
+        return view('user.aianalyisvealuation'); // Truyền biến đến view
     }
     
+
+    public function showAnalysisGuestForm()
+    {
+        return view('aianalyisvealuationguest'); // Truyền biến đến view
+    }
+
+
+
     public function showAnalysisEvaluationHistory()
     {
         $histories = TextAnalysis::all(); // Lấy tất cả dữ liệu lịch sử

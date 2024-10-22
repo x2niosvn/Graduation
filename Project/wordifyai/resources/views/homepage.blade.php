@@ -25,8 +25,21 @@
                     <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                 </ul>
                 <div>
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
+                    {{-- check login and show dashboard button --}}
+                    @if (Auth::check())
+                        <a href="{{ route('dashboard') }}" class="btn btn-primary me-2">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+                    @endif
+
+
+                   
+                    {{-- <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Login</a>
                     <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+                 --}}
+                
+                
                 </div>
             </div>
         </div>
@@ -35,7 +48,7 @@
     <section class="hero-section">
         <div class="container text-center">
             <h1 class="display-4 mb-4">AI Text Analysis Chatbot Helps You Gain Deeper Insights into Language Data</h1>
-            <a href="#" class="btn btn-info btn-lg">Use Now</a>
+            <a href="{{route('text-analysis-evaluation-guest')}}" class="btn btn-info btn-lg">Use Text Analysis And Evaluation For Guest</a>
         </div>
     </section>
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class OpenAIService
 {
@@ -15,64 +16,84 @@ class OpenAIService
         $this->apiKey = config('services.openai.api_key'); // api key
     }
 
+    /**
+     * Gửi yêu cầu phân tích văn bản.
+     *
+     * @param string $message
+     * @return array
+     * @throws \Exception
+     */
     public function sendMessageForAnalysis($message)
     {
-        // nhan du lieu tu form
-        $language = request()->input('language', 'en'); // ngon ngu
-        $situation = request()->input('situation', 'general'); // tinh huong
-        $spell_check = request()->input('spell_check', 'yes') === 'yes' ? 'enabled' : 'disabled'; // Nhận tùy chọn kiểm tra chính tả
+        $language = request()->input('language', 'en'); // Ngôn ngữ
 
-        // Kiểm tra dữ liệu đầu vào
-        if (empty($message) || strlen($message) < 10) {
-            return ['error' => 'Your input is too short or invalid.'];
-        }
+        // Gửi yêu cầu đến API để phân tích
+        $response = $this->sendRequest($language, $message, "You are a text-analyzing AI named WordifiAI.
+Please analyze the following text in detail and identify its type. 
+Focus on the following aspects in your analysis:
+1. Content Understanding: Provide a summary of the main ideas and themes presented in the text.
+2. Type Identification: Clearly identify the type of text (e.g., story, review, essay, article, etc.) and explain your reasoning.
+3. Language Use: Analyze the effectiveness of the language used, including vocabulary, sentence structure, and overall style.
+4. Engagement: Assess how engaging the text is for its intended audience. Does it capture interest? Is it compelling?
+5. Overall Analysis: Offer a comprehensive evaluation of the text's strengths and weaknesses, along with any suggestions for improvement.
+Translate all respond to {$language}.");
 
-        // gui yeu cau den API de phan tich
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
-        ])->post("{$this->baseUrl}/chat/completions", [
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => "You are a text-analyzing AI that operates and responds in {$language}. Your task is to analyze in detail the content of a given text from a user, the user will give you a situation that you have to analyze according to which is {$situation}. {$spell_check} checks the spelling of the text and {$spell_check} points out any errors or omissions at the end of the analysis.
-Please identify and reject irrelevant input, including greetings, math problems, and general questions. If you encounter irrelevant input, respond with a message stating that it is irrelevant and make sure to stay focused on your analysis."
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $message
-                ],
-            ],
-        ]);
-
-        // Kiểm tra xem có lỗi không
-        if ($response->failed()) {
-            throw new \Exception('Error connecting to OpenAI API for analysis');
-        }
-
-        // Trả về kết quả
-        return $response->json();
+        return $response;
     }
 
+    /**
+     * Gửi yêu cầu đánh giá văn bản.
+     *
+     * @param string $message
+     * @return array
+     * @throws \Exception
+     */
     public function sendMessageForEvaluation($message)
     {
-        // Nhận ngôn ngữ từ form
-        $language = request()->input('language', 'en'); // nhan ngon ngu
+        $language = request()->input('language', 'en'); // Ngôn ngữ
 
-        // Kiểm tra dữ liệu đầu vào
-        if (empty($message) || strlen($message) < 10) {
-            return ['error' => 'Your input is too short or invalid.'];
-        }
 
         // Gửi yêu cầu đến API để đánh giá
+        $response = $this->sendRequest($language, $message, "You are WordifyAI. You are an expert in evaluating text analysis. Please analyze the following text in detail. 
+Focus on the following aspects:
+1. Structure: Assess the organization of ideas, paragraphing, and overall flow. Are the main points clear and logically arranged?
+2. Clarity: Evaluate how clearly the ideas are expressed. Is the language accessible and straightforward? Are there any ambiguous or confusing phrases?
+3. Tone: Analyze the tone of the text. Does it suit the intended audience and purpose? Is it formal, informal, persuasive, etc.?
+4. Overall Quality: Provide an assessment of the overall effectiveness of the text. Consider factors such as engagement, originality, and whether the text fulfills its intended purpose.
+Translate all respond to {$language}."); 
+
+        return $response;
+    }
+
+    /**
+     * Gửi yêu cầu đến API với thông điệp và ngôn ngữ đã chỉ định.
+     *
+     * @param string $language
+     * @param string $message
+     * @param string $systemMessage
+     * @return array
+     * @throws \Exception
+     */
+    protected function sendRequest($language, $message, $systemMessage)
+    {
+        // Tạo một khóa cache duy nhất cho yêu cầu
+        $cacheKey = "analysis_{$language}_" . md5($message);
+
+        // Kiểm tra xem có dữ liệu đã được cache không
+        $cachedResponse = Cache::get($cacheKey);
+        if ($cachedResponse) {
+            return $cachedResponse;
+        }
+
+        // Thiết lập timeout cho yêu cầu
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
-        ])->post("{$this->baseUrl}/chat/completions", [
+        ])->timeout(30)->post("{$this->baseUrl}/chat/completions", [ // Thay đổi timeout ở đây
             'model' => 'gpt-3.5-turbo',
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => "You are an expert in evaluating text analysis. Your role is to evaluate the provided analysis focusing on structure, clarity, tone, and overall quality. Respond in the language of {$language}."
+                    'content' => $systemMessage . " Respond in {$language}."
                 ],
                 [
                     'role' => 'user',
@@ -83,8 +104,11 @@ Please identify and reject irrelevant input, including greetings, math problems,
 
         // Kiểm tra xem có lỗi không
         if ($response->failed()) {
-            throw new \Exception('Error connecting to OpenAI API for evaluation');
+            throw new \Exception('Error connecting to OpenAI API');
         }
+
+        // Lưu kết quả vào cache
+        Cache::put($cacheKey, $response->json(), 300); // Cache kết quả trong 5 phút
 
         // Trả về kết quả
         return $response->json();

@@ -16,6 +16,14 @@ use App\Http\Controllers\EvaluationSituationController;
 |
 */
 
+//Đối với user chưa đăng nhập
+
+Route::get('/text-analysis-evaluation-guest', [OpenAIController::class, 'showAnalysisGuestForm'])->name('text-analysis-evaluation-guest');
+
+
+
+
+
 Route::get('/', function () {
     return view('homepage');
 });
@@ -54,7 +62,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
      Route::get('/text-analysis-evaluation', [OpenAIController::class, 'showAnalysisForm'])->name('text-analysis-evaluation');
     
-    Route::post('/text-analysis-evaluation', [OpenAIController::class, 'askOpenAI'])->name('ask-openai');
+    Route::post('/text-analysis-evaluation', [OpenAIController::class, 'analysisText'])->name('ask-openai');
 
 
     Route::get('/analysis-evaluation-history', [OpenAIController::class, 'showAnalysisEvaluationHistory'])->name('analysis-evaluation-history');

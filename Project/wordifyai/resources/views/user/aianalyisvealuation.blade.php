@@ -25,46 +25,22 @@
                             </select>
                         </div>
 
-                        <!-- Dropdown chọn tình huống -->
-                        <div class="mb-3">
-                            <label for="situation" class="form-label"><i class="fas fa-clipboard-list me-1"></i> Select Situation for Evaluation</label>
-                            <select class="form-select" id="situation" name="situation" required>
-                                
-                                @if(isset($situations))
-                                    @foreach($situations as $situation)
-                                        <option value="{{ $situation->value }}">{{ $situation->label }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-
-
-
-                        <!-- Radio kiểm tra chính tả -->
-                        <div class="mb-3">
-                            <label class="form-label"><i class="fas fa-check-circle me-1"></i> Enable Spell Check</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="spell_check" id="spell_check_yes" value="yes" checked>
-                                <label class="form-check-label" for="spell_check_yes">Yes</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="spell_check" id="spell_check_no" value="no">
-                                <label class="form-check-label" for="spell_check_no">No</label>
-                            </div>
-                        </div>
-
                         <button type="submit" class="btn btn-success w-100" id="submitButton">
                             <i class="fas fa-paper-plane me-2"></i> Analyze and Evaluate
                         </button>
                     </form>
                 </div>
             </div>
+            <!-- Hiển thị thời gian phản hồi -->
+            <div id="responseTimeContainer" class="mt-3"></div>
 
             <!-- Hiển thị kết quả nếu có -->
             <div id="resultContainer"></div>
 
             <!-- Hiển thị lỗi nếu có -->
             <div id="errorContainer"></div>
+
+
         </div>
     </div>
 
@@ -72,12 +48,16 @@
         // Thêm chức năng loading cho nút
         const form = document.getElementById('textAnalysisForm');
         const submitButton = document.getElementById('submitButton');
+        const responseTimeContainer = document.getElementById('responseTimeContainer');
 
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Ngăn không cho form submit thông thường
             const formData = new FormData(form);
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Loading for AI analyis and evaluation...'; // Thay đổi nội dung nút
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Loading for AI analysis and evaluation...'; // Thay đổi nội dung nút
             submitButton.disabled = true; // Vô hiệu hóa nút
+            
+            // Bắt đầu đo thời gian
+            const startTime = performance.now();
 
             // Gửi yêu cầu AJAX
             fetch("{{ route('ask-openai') }}", {
@@ -110,6 +90,11 @@
                         </div>
                     `;
                     document.getElementById('resultContainer').innerHTML = resultHtml;
+
+                    // Tính thời gian phản hồi
+                    const endTime = performance.now();
+                    const responseTime = ((endTime - startTime) / 1000).toFixed(2); // Thời gian phản hồi trong giây
+                    responseTimeContainer.innerHTML = `<div class="alert alert-success"><strong>Response Time:</strong> ${responseTime} seconds</div>`;
                 } else {
                     document.getElementById('errorContainer').innerHTML = `<div class="alert alert-danger mt-4"><i class="fas fa-exclamation-circle me-2"></i> ${data.error}</div>`;
                 }
