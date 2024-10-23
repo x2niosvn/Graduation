@@ -42,4 +42,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Get the role associated with the user.
+     */
+    public function roleName()
+    {
+        return $this->role_id == 1 ? 'User' : 'Admin';
+    }
+    
+
 }

@@ -19,6 +19,21 @@
                         <i class="fas fa-home me-1"></i> Dashboard
                     </x-nav-link>
                 </li>
+
+                <!-- AI Analysis and Evaluation -->
+                <li class="nav-item">
+                    <x-nav-link :href="route('text-analysis-evaluation')" :active="request()->routeIs('text-analysis-evaluation')">
+                        <i class="fas fa-pen
+                            -alt me-1"></i> AI Analysis and Evaluation
+                    </x-nav-link>
+                </li>
+
+                <!-- AI Analysis and Evaluation History -->
+                <li class="nav-item">
+                    <x-nav-link :href="route('analysis-evaluation-history')" :active="request()->routeIs('analysis-evaluation-history')">
+                        <i class="fas fa-history me-1"></i> AI Analysis and Evaluation History
+                    </x-nav-link>
+                </li>
             </ul>
                 
             <ul class="navbar-nav ms-auto">

@@ -54,8 +54,8 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
 
-        //Thêm middle ware cho xử lý quyền
         'role' => \App\Http\Middleware\EnsureUserRole::class,
+
 
 
         'auth' => \App\Http\Middleware\Authenticate::class,

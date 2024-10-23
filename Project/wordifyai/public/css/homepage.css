@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+
+.hero-section {
+    background-image: url('../img/ai_bgr.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 100px 0; 
+    padding-top: 120px; 
+    position: relative;
+    min-height: 650px; 
+}
+
+
+
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 20px; /* Thêm margin trên để lùi tiêu đề xuống */
+    margin-bottom: 20px; /* Tăng khoảng cách dưới tiêu đề nếu cần */
+}
+
+
+.hero-section h2 {
+    font-size: 2.5rem;
+    font-weight: normal;
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Tạo khối tròn cho ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    margin-bottom: 1rem;
+}
+
+
+
+.circular-chart {
+    background: conic-gradient(
+        #ff9900 0deg 90deg,
+        #33cc33 90deg 180deg,
+        #3366cc 180deg 270deg,
+        #cc3366 270deg 360deg
+    );
+}
+
+.features h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.features p {
+    color: #666;
+}
+
+.btn-warning {
+    background-color: #ff9900;
+    border-color: #ff9900;
+}
+
+.btn-warning:hover {
+    background-color: #e68a00;
+    border-color: #e68a00;
+}
