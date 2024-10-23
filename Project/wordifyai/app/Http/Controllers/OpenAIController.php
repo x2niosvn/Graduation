@@ -156,6 +156,70 @@ class OpenAIController extends Controller
 
 
 
+
+
+
+
+    public function analyzeTextGuest(Request $request) {
+        $message = $request->input('message');
+    
+        try {
+            $response = $this->openAIService->sendMessageForAnalysis($message);
+            
+            if (!empty($response['choices'])) {
+                $answer = $response['choices'][0]['message']['content'];
+                Log::info('Raw OpenAI Response: ', ['response' => $answer]);
+    
+                return response()->json([
+                    'success' => true,
+                    'answer' => $this->markdowntohtml($answer),
+                ]);
+            }
+    
+            throw new \Exception('Cannot get valid response from OpenAI API.');
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+    public function AnalysisAndEvaluationGuest(Request $request) {
+        $message = $request->input('message');
+    
+        // Kiểm tra tính hợp lệ của văn bản
+        if (empty($message)) {
+            return response()->json(['success' => false, 'error' => 'Text cannot be empty.']);
+        }
+    
+        if (str_word_count($message) > 500) {
+            return response()->json(['success' => false, 'error' => 'The text is too long. Please provide a text with less than 500 words.']);
+        }
+    
+        return $this->analyzeTextGuest($request);
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
     private function markdowntohtml($text)
     {
         $parsedown = new Parsedown();
@@ -173,7 +237,6 @@ class OpenAIController extends Controller
     {
         return view('aianalyisvealuationguest'); // Truyền biến đến view
     }
-
 
 
     public function showAnalysisEvaluationHistory()
