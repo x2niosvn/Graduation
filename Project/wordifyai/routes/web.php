@@ -62,8 +62,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
      Route::get('/text-analysis-evaluation', [OpenAIController::class, 'showAnalysisForm'])->name('text-analysis-evaluation');
     
-    Route::post('/text-analysis-evaluation', [OpenAIController::class, 'analysisText'])->name('ask-openai');
-
+     Route::post('/text-analysis', [OpenAIController::class, 'AnalysisAndEvaluation'])->name('analyze-evaluation-text');
+     
 
     Route::get('/analysis-evaluation-history', [OpenAIController::class, 'showAnalysisEvaluationHistory'])->name('analysis-evaluation-history');
     Route::get('/analysis-evaluation-history/{id}', [OpenAIController::class, 'getAnalysisDetail']);

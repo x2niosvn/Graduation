@@ -28,114 +28,127 @@ class OpenAIController extends Controller
         $this->openAIService = $openAIService;
     }
 
-    public function analysisText(Request $request)
-    {
-        // Lấy message từ request
+    public function AnalysisAndEvaluation(Request $request) {
         $message = $request->input('message');
+        $analysisOrEvaluation = $request->input('analysis_evaluation');
     
-        // Kiểm tra độ dài ký tự (bao gồm cả dấu cách)
-        $messageLength = strlen($message);
-        if ($messageLength > 30000 || $messageLength < 20) {
-            $errorMessage = $messageLength > 30000 
-                ? 'The text is too long. Please provide a text with less than 30,000 characters.' 
-                : 'The text is too short. Please provide a text with at least 20 characters.';
+        if (empty($message)) {
+            return response()->json(['success' => false, 'error' => 'Text cannot be empty.']);
+        }
+    
+        if ($analysisOrEvaluation == 'analysis') {
+            return $this->analyzeText($request);
+        } elseif ($analysisOrEvaluation == 'evaluation') {
+            return $this->evaluateText($request);
+        } else {
+            return response()->json(['success' => false, 'error' => 'Invalid request.']);
+        }
+    }
 
+
+
+
+    public function analyzeText(Request $request) {
+        $message = $request->input('message');
+        $messageLength = strlen($message);
+    
+        if ($messageLength > 30000 || $messageLength < 20) {
             return response()->json([
                 'success' => false,
-                'error' => $errorMessage,
+                'error' => $messageLength > 30000 
+                    ? 'The text is too long. Please provide a text with less than 30,000 characters.' 
+                    : 'The text is too short. Please provide a text with at least 20 characters.'
             ]);
         }
-
     
-        // Gửi message tới API và nhận phản hồi
         try {
             $response = $this->openAIService->sendMessageForAnalysis($message);
-    
-            // Kiểm tra phản hồi có hợp lệ không
             if (isset($response['choices']) && !empty($response['choices'])) {
-                // Lọc ra chỉ phần câu trả lời từ phản hồi
                 $answer = $response['choices'][0]['message']['content'];
                 Log::info('Raw OpenAI Response: ', ['response' => $answer]);
     
-                // Chuyển đổi định dạng Markdown thành HTML cho kết quả phân tích
                 $formattedAnswer = $this->markdowntohtml($answer);
+                $analysisCode = uniqid('wordifyai_', true); // Tạo mã ngẫu nhiên
     
-                // Lưu lịch sử phân tích
                 $textAnalysis = TextAnalysis::create([
-                    'user_id' => auth()->id(),  // Lấy ID người dùng hiện tại
+                    'user_id' => auth()->id(),
                     'text_content' => $message,
                     'analysis_result' => $formattedAnswer,
-                    'type_of_analysis' => 'text analysis',  // Bạn có thể thay đổi giá trị này tùy theo yêu cầu
-                    'evaluation' => '',  // Để trống ban đầu, sẽ cập nhật sau
-                    'status' => 'completed',  // Đặt trạng thái là 'completed'
+                    'type_of_analysis' => 'text analysis',
+                    'evaluation' => '', // Khởi tạo trống
+                    'status' => 'completed',
+                    'analysis_evaluation_code' => $analysisCode, // Lưu mã
                 ]);
     
-                // Đánh giá văn bản đầu vào
-                $evaluation = $this->evaluateText($message);
-    
-                // Chuyển đổi kết quả đánh giá sang HTML
-                $formattedEvaluation = $this->markdowntohtml($evaluation);
-    
-                // Cập nhật lại đánh giá trong bảng text_analysis
-                $textAnalysis->evaluation = $formattedEvaluation;
-                $textAnalysis->save(); // Lưu thay đổi
-    
-                // Lưu lịch sử hành động của người dùng
-                History::create([
-                    'user_id' => auth()->id(),
-                    'action' => 'Analyzed text with ID: ' . $textAnalysis->id,
-                ]);
-    
-                // Trả về JSON cho AJAX
                 return response()->json([
                     'success' => true,
+                    'type' => 'analysis',
                     'answer' => $formattedAnswer,
-                    'evaluation' => $formattedEvaluation,
-                    'history_entry' => 'Analyzed: ' . $message, // Cập nhật lịch sử
+                    'analysis_id' => $textAnalysis->id,
+                    'analysis_evaluation_code' => $analysisCode, // Trả về mã
+                    'history_entry' => 'Analyzed: ' . $message,
                 ]);
             } else {
-                throw new \Exception('Can not get valid response from OpenAI API.');
+                throw new \Exception('Cannot get valid response from OpenAI API.');
             }
-    
         } catch (\Exception $e) {
-            // Log lỗi để dễ dàng theo dõi
             Log::error('Error while calling OpenAI API: ', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
     
+    public function evaluateText(Request $request) {
+        $message = $request->input('message');
+        $messageLength = strlen($message);
+    
+        if ($messageLength > 30000 || $messageLength < 20) {
             return response()->json([
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => $messageLength > 30000 
+                    ? 'The text is too long. Please provide a text with less than 30,000 characters.' 
+                    : 'The text is too short. Please provide a text with at least 20 characters.'
             ]);
         }
-    }
     
-    
-
-
-
-
-    private function evaluateText($analysisResult)
-    {
         try {
-            // Gọi OpenAI API để đánh giá kết quả phân tích
-            $response = $this->openAIService->sendMessageForEvaluation($analysisResult);
-
-            // Trích xuất kết quả đánh giá từ phản hồi
+            $response = $this->openAIService->sendMessageForEvaluation($message);
             if (isset($response['choices']) && !empty($response['choices'])) {
-                return $response['choices'][0]['message']['content'];
+                $evaluation = $response['choices'][0]['message']['content'];
+                Log::info('Raw OpenAI Evaluation Response: ', ['response' => $evaluation]);
+    
+                $formattedEvaluation = $this->markdowntohtml($evaluation);
+                
+                $analysisCode = uniqid('wordifyai_', true); // Tạo mã ngẫu nhiên
+    
+
+                $textAnalysis = TextAnalysis::create([
+                    'user_id' => auth()->id(),
+                    'text_content' => $message,
+                    'analysis_result' => '', // Khởi tạo trống
+                    'type_of_analysis' => 'text evaluation',
+                    'evaluation' => $formattedEvaluation, 
+                    'status' => 'completed',
+                    'analysis_evaluation_code' => $analysisCode, // Lưu mã
+                ]);
+                    
+                    // Trả về mã phân tích
+                    return response()->json([
+                        'success' => true,
+                        'type' => 'evaluation',
+                        'evaluation' => $formattedEvaluation,
+                        'analysis_id' => $textAnalysis->id,
+                        'analysis_evaluation_code' => $analysisCode, // Trả về mã
+                    ]);
+                
             } else {
-                return 'No evaluation available.';
+                throw new \Exception('Cannot get valid response from OpenAI API.');
             }
         } catch (\Exception $e) {
-            // Nếu có lỗi, trả về một thông báo mặc định
-            Log::error('Error while evaluating text: ', ['error' => $e->getMessage()]);
-            return 'Unable to evaluate the text at this moment. Please try again later.';
+            Log::error('Error while calling OpenAI API for evaluation: ', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
     }
-
-
-
-
-
+    
 
 
 

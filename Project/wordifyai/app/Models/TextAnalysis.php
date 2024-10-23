@@ -16,6 +16,7 @@ class TextAnalysis extends Model
         'type_of_analysis',
         'evaluation',
         'status',
+        'analysis_evaluation_code',
     ];
 
     public $timestamps = true;  //  tự động cập nhật 'created_at'
