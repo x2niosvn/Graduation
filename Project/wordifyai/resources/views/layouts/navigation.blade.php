@@ -46,15 +46,23 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm rounded" aria-labelledby="userDropdown" 
                         style="border: 1px solid rgba(0, 0, 0, 0.1);">
+                        {{-- Truy cập vào admin nếu roleName = Admin --}}
+                        @if (Auth::user()->roleName() == 'Admin')
+                            <li>
+                                <a class="dropdown-item text-success" href="{{ route('admin.dashboard') }}">
+                                    <i class="fas fa-crown"></i> Admin page
+                                </a>
+                            </li>
+                        @endif
                         <li>
-                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                            <a class="dropdown-item text-primary" href="{{ route('profile.edit') }}">
                                 <i class="fas fa-user me-1"></i> Profile
                             </a>
                         </li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="dropdown-item" type="submit">
+                                <button class="dropdown-item text-danger" type="submit">
                                     <i class="fas fa-sign-out-alt me-1"></i> Log Out
                                 </button>
                             </form>

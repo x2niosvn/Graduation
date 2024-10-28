@@ -98,7 +98,7 @@ class OpenAIService
         // Thiết lập timeout cho yêu cầu
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
-        ])->timeout(30)->post("{$this->baseUrl}/chat/completions", [ // Thay đổi timeout ở đây
+        ])->timeout(30)->post("{$this->baseUrl}/chat/completions", [ // timeout 
             'model' => 'gpt-3.5-turbo',
             'messages' => [
                 [
