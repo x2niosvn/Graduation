@@ -38,10 +38,13 @@ Route::middleware('auth')->group(function () {
 // người dùng có vai trò admin (role_id = 2)
 Route::middleware(['auth', 'role:2'])->group(function () {
 
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
+
+
+
+
+    
     Route::get('/user-management', [AdminController::class, 'index'])->name('user-management');
 
 
@@ -51,6 +54,20 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::get('/user-management/{id}/edit', [AdminController::class, 'edit'])->name('user.edit');
     Route::put('/user-management/{id}', [AdminController::class, 'update'])->name('user.update');
     Route::delete('/user-management/{id}', [AdminController::class, 'destroy'])->name('user.destroy');
+
+
+
+
+
+
+    // Hiển thị lịch sử phân tích cho admin
+    Route::get('/admin/analysis-history', [AdminController::class, 'analysisHistory'])->name('admin.analysisHistory');
+    Route::delete('/admin/analysis-history/{id}', [AdminController::class, 'deleteAnalysis'])->name('admin.deleteAnalysis');
+    
+
+    // Hiển thị chi tiết phân tích cho admin
+    Route::get('/admin/analysis-history/{id}/analysis-detail', [AdminController::class, 'viewAnalysisDetail'])->name('admin.viewAnalysisDetail');
+    Route::get('/admin/analysis-history/{id}/evaluation-detail', [AdminController::class, 'viewEvaluationDetail'])->name('admin.viewEvaluationDetail');
 
 
 });

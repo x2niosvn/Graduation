@@ -24,7 +24,7 @@
 
                 <!-- Analysis and Evaluation Management -->
                 <li class="nav-item">
-                    <x-nav-link :href="route('text-analysis-evaluation')" :active="request()->routeIs('text-analysis-evaluation')">
+                    <x-nav-link :href="route('admin.analysisHistory')" :active="request()->routeIs('admin.analysisHistory')">
                         <i class="fas fa-chart-line me-1"></i> Analysis and Evaluation Management
                     </x-nav-link>
                 </li>

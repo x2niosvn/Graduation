@@ -9,7 +9,8 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Analysis Text</th>
+                        <th>Content</th>
+                        <th>Type</th>
                         <th>Timestamp</th>
                         <th>Actions</th>
                     </tr>
@@ -21,13 +22,14 @@
                             <td>
                                 {{ Str::limit($history->text_content, 100) }}...
                             </td>
+                            <td>{{ $history->type_of_analysis }}</td>
                             <td>{{ $history->created_at->format('Y-m-d H:i:s') }}</td>
                             <td>
                                 <button class="btn btn-info btn-sm view-analysis" data-id="{{ $history->id }}">
-                                    <i class="fas fa-search"></i> View
+                                    <i class="fas fa-search"></i>
                                 </button>
                                 <button class="btn btn-danger btn-sm delete-history" data-id="{{ $history->id }}">
-                                    <i class="fas fa-trash-alt"></i> Delete
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
                         </tr>

@@ -241,7 +241,8 @@ class OpenAIController extends Controller
 
     public function showAnalysisEvaluationHistory()
     {
-        $histories = TextAnalysis::all(); // Lấy tất cả dữ liệu lịch sử
+        $userId = auth()->id(); // Lấy ID của người dùng hiện tại
+        $histories = TextAnalysis::where('user_id', $userId)->get(); // Lấy dữ liệu lịch sử theo ID người dùng
         return view('user.analysisevaluationhistory', compact('histories'));
     }
     
@@ -255,9 +256,9 @@ class OpenAIController extends Controller
 
 
             return response()->json([
-                'content' => $this->markdowntohtml($text_content), // Chuyển đổi Markdown sang HTML
-                'analysis' => $this->markdowntohtml($analysis), // Thay đổi theo trường của bạn
-                'evaluation' => $this->markdowntohtml($evaluation), // Thay đổi theo trường của bạn
+                'content' => $this->markdowntohtml($text_content), 
+                'analysis' => $this->markdowntohtml($analysis), 
+                'evaluation' => $this->markdowntohtml($evaluation), 
             ]);
         }
         return response()->json(['error' => 'Can not find data'], 404);
