@@ -4,11 +4,25 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\SuggestionController;
 
 //Đối với user chưa đăng nhập
 Route::get('/text-analysis-evaluation-guest', [OpenAIController::class, 'showAnalysisGuestForm'])->name('text-analysis-evaluation-guest');
 Route::post('/text-analysis-guest', [OpenAIController::class, 'AnalysisAndEvaluationGuest'])->name('guest-analyze-evaluation-text');
+
+
+
+Route::get('/suggestions/create', [SuggestionController::class, 'create'])->name('suggestions.create');
+Route::post('/suggestions', [SuggestionController::class, 'store'])->name('suggestions.store');
+
+
+// Hiển thị chi tiết suggestion
+Route::get('/suggestions/{id}', [SuggestionController::class, 'show'])->name('suggestions.show');
+
+
+
+
+
 
 
 

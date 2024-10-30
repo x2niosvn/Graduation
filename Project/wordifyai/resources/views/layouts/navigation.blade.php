@@ -34,6 +34,14 @@
                         <i class="fas fa-history me-1"></i> AI Analysis and Evaluation History
                     </x-nav-link>
                 </li>
+
+
+                <!-- Suggestions -->
+                <li class="nav-item">
+                    <x-nav-link :href="route('suggestions.create')" :active="request()->routeIs('suggestions.create')">
+                        <i class="fas fa-lightbulb me-1"></i> Suggestions
+                    </x-nav-link>
+                </li>
             </ul>
                 
             <ul class="navbar-nav ms-auto">
