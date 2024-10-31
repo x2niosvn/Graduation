@@ -7,7 +7,7 @@ This project is a text analysis and evaluation tool that uses AI to analyze and 
 Team Members:
 
 - [Nguyen Xuan Nam](https://github.com/x2niosvn) -  Student ID: BH00794
-- [Nguyen Ha Trung Phong](https://) -  Student ID: 
+- [Nguyen Ha Trung Phong](https://github.com/Turt1e262) -  Student ID: BH00787
 - [Nguyen Gia Bao]() -  Student ID: BH00795
-- [Vu Le Manh Cuong]() -  Student ID: 
+- [Vu Le Manh Cuong](https://github.com/PyPyyTH) -  Student ID: BH00742
 
