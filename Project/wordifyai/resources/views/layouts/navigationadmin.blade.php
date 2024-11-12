@@ -31,7 +31,7 @@
 
                 <!-- Suggestions Management -->
                 <li class="nav-item">
-                    <x-nav-link :href="route('text-analysis-evaluation')" :active="request()->routeIs('text-analysis-evaluation')">
+                    <x-nav-link :href="route('admin.suggestions.index')" :active="request()->routeIs('admin.suggestions.index')">
                         <i class="fas fa-lightbulb me-1"></i> Suggestions Management
                     </x-nav-link>
                 </li>

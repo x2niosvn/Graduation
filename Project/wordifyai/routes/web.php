@@ -84,6 +84,19 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::get('/admin/analysis-history/{id}/evaluation-detail', [AdminController::class, 'viewEvaluationDetail'])->name('admin.viewEvaluationDetail');
 
 
+
+
+
+    //hiển thị lịch sủ suggestion
+    Route::get('/admin/suggestions', [AdminController::class, 'adminIndex'])->name('admin.suggestions.index');
+    Route::get('/admin/suggestions/{id}', [AdminController::class, 'adminShow'])->name('admin.suggestions.show');
+    Route::post('/admin/suggestions/{id}/update', [AdminController::class, 'adminUpdate'])->name('admin.suggestions.update');
+
+
+
+
+
+
 });
     
 

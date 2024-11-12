@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\TextAnalysis;
+use App\Models\Suggestion;
 class AdminController extends Controller
 {
         // Hiển thị danh sách người dùng
@@ -149,11 +150,30 @@ class AdminController extends Controller
 
 
 
+    //hiển thị bảng suggestion
+    public function adminIndex()
+    {
+        $suggestions = Suggestion::latest()->paginate(10); // Phân trang 10 mục
+        return view('admin.suggestions.index', compact('suggestions'));
+    }
 
+    //hiển thị chi tiết suggestion
+    public function adminShow($id)
+    {
+        $suggestion = Suggestion::findOrFail($id);
+        return view('admin.suggestions.show', compact('suggestion'));
+    }
 
+    //cập nhật suggestion
+    public function adminUpdate(Request $request, $id)
+{
+    $suggestion = Suggestion::findOrFail($id);
+    $suggestion->status = $request->status;
+    $suggestion->admin_feedback = $request->admin_feedback;
+    $suggestion->save();
 
-
-
+    return redirect()->route('admin.suggestions.index')->with('success', 'Suggestion updated successfully.');
+}
 
 
 
