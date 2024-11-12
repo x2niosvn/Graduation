@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\History;
 
 class ProfileController extends Controller
 {
@@ -33,6 +34,11 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+
+        History::create([
+            'user_id' => auth()->id(),
+            'action' => 'User edited profile',
+        ]);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

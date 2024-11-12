@@ -29,13 +29,6 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="detail" class="form-label"><i class="fas fa-cogs me-1"></i> Select Analysis Detail <b class="text-danger">(If You Choose Detailed, The System Need Needs More Time)</b></label>
-                            <select class="form-control" id="detail" name="detail" required>
-                                <option value="simple">Simple</option>
-                                <option value="detailed">Detailed</option>
-                            </select>
-                        </div>
 
                         <button type="submit" class="btn btn-success w-100" id="submitButton">
                             <i class="fas fa-paper-plane me-2"></i> Analyze and Evaluate

@@ -79,6 +79,12 @@ class OpenAIController extends Controller
                     'status' => 'completed',
                     'analysis_evaluation_code' => $analysisCode, // Lưu mã
                 ]);
+
+                //lưu lịch sử người dùng vào bảng History
+                History::create([
+                    'user_id' => auth()->id(),
+                    'action' => 'User using Text Analysis. Analysis ID: ' . $textAnalysis->id,
+                ]);
     
                 return response()->json([
                     'success' => true,
@@ -130,6 +136,12 @@ class OpenAIController extends Controller
                     'status' => 'completed',
                     'analysis_evaluation_code' => $analysisCode, // Lưu mã
                 ]);
+
+                // Lưu lịch sử người dùng vào bảng History
+            History::create([
+                'user_id' => auth()->id(),
+                'action' => 'User using Text Evaluation. Evaluation ID: ' . $textAnalysis->id,
+            ]);
                     
                     // Trả về mã phân tích
                     return response()->json([
@@ -149,11 +161,6 @@ class OpenAIController extends Controller
         }
     }
     
-
-
-
-
-
 
 
 

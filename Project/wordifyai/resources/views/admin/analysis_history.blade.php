@@ -25,7 +25,7 @@
                             <th>ID</th>
                             <th>User ID</th>
                             <th>Content</th>
-                            <th>Result</th>
+                            <th>Result</th> 
                             <th>Type</th>
                             <th>Status</th>
                             <th>Timestamp</th>
@@ -71,11 +71,6 @@
                     </tbody>
                 </table>
                 </div>
-
-                <!-- Pagination Links -->
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $history->links() }}
-                </div>
             </div>
         </div>
     </div>
@@ -83,19 +78,12 @@
         // Initialize DataTables
         $(document).ready(function() {
             $('#analisysevaluationTable').DataTable({
-                responsive: true,
-                language: {
-                    search: "Search:",
-                    lengthMenu: "Show _MENU_ entries",
-                    info: "Showing _START_ to _END_ of _TOTAL_ datas",
-                    paginate: {
-                        first: "First",
-                        last: "Last",
-                        next: "Next",
-                        previous: "Previous"
-                    },
-                    emptyTable: "No text analisys or evaluation found"
-                }
+                "paging": true,  // DataTable sẽ tự động phân trang
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
             });
         });
     </script>

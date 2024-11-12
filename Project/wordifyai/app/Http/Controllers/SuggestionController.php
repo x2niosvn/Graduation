@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Suggestion;
 use Illuminate\Http\Request;
+use App\Models\History;
 
 class SuggestionController extends Controller
 {
@@ -28,6 +29,11 @@ class SuggestionController extends Controller
             'title' => $request->title,
             'suggestion_text' => $request->suggestion_text,
             'status' => 'pending',
+        ]);
+
+        History::create([
+            'user_id' => auth()->id(),
+            'action' => 'User suggestion. Title: ' . $request->title,
         ]);
 
         return redirect()->back()->with('success', 'Thank you for your suggestion!');

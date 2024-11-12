@@ -113,9 +113,11 @@ class AdminController extends Controller
     // Xem danh sách lịch sử đánh giá
     public function analysisHistory()
     {
-        $history = TextAnalysis::orderBy('created_at', 'desc')->paginate(10);
+        // Lấy tất cả dữ liệu mà không phân trang
+        $history = TextAnalysis::orderBy('created_at', 'desc')->get();
         return view('admin.analysis_history', compact('history'));
     }
+    
 
 
 
@@ -153,9 +155,11 @@ class AdminController extends Controller
     //hiển thị bảng suggestion
     public function adminIndex()
     {
-        $suggestions = Suggestion::latest()->paginate(10); // Phân trang 10 mục
+        // Lấy tất cả dữ liệu mà không phân trang
+        $suggestions = Suggestion::latest()->get();
         return view('admin.suggestions.index', compact('suggestions'));
     }
+    
 
     //hiển thị chi tiết suggestion
     public function adminShow($id)
@@ -198,6 +202,20 @@ class AdminController extends Controller
         $completedEvaluations = TextAnalysis::where('type_of_analysis', 'text evaluation')->where('status', 'completed')->count(); // Số lượng đánh giá hoàn thành
         $incompleteEvaluations = TextAnalysis::where('type_of_analysis', 'text evaluation')->where('status', '!=', 'completed')->count(); // Số lượng đánh giá chưa hoàn thành
 
+
+        $totalSuggestions = Suggestion::count(); // Tổng số góp ý
+
+        //tộng số góp ý chưa xử lý
+        $totalPendingSuggestions = Suggestion::where('status', 'pending')->count();
+
+        //tổng số góp ý đã xử lý
+        $totalResolvedSuggestions = Suggestion::where('status', 'approved')->count();
+
+        //tổng số góp ý không thể xử lý
+        $totalUnresolvedSuggestions = Suggestion::where('status', 'rejected')->count();
+
+
+
         return view('admin.dashboard', compact(
             'userCount',
             'totalAnalysisAndEvaluations', 
@@ -206,7 +224,11 @@ class AdminController extends Controller
             'completedAnalysis', 
             'incompleteAnalysis', 
             'completedEvaluations', 
-            'incompleteEvaluations'
+            'incompleteEvaluations',
+            'totalSuggestions',
+            'totalPendingSuggestions',
+            'totalResolvedSuggestions',
+            'totalUnresolvedSuggestions'
         ));
     }
 

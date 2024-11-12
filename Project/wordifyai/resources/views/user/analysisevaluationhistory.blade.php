@@ -22,10 +22,14 @@
                             <td>
                                 {{ Str::limit($history->text_content, 100) }}...
                             </td>
-                            <td>{{ $history->type_of_analysis }}</td>
+                            <td>
+                                <span class="badge {{ $history->type_of_analysis == 'text analysis' ? 'bg-success' : 'bg-warning' }}">
+                                    {{ ucfirst($history->type_of_analysis) }}
+                                </span>
+                            </td>
                             <td>{{ $history->created_at->format('Y-m-d H:i:s') }}</td>
                             <td>
-                                <button class="btn btn-info btn-sm view-analysis" data-id="{{ $history->id }}">
+                                <button class="btn btn-info btn-sm view-analysis" data-id="{{ $history->id }}" data-type="{{ $history->type_of_analysis }}">
                                     <i class="fas fa-search"></i>
                                 </button>
                                 <button class="btn btn-danger btn-sm delete-history" data-id="{{ $history->id }}">
@@ -44,16 +48,18 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-info text-white">
-                    <h5 class="modal-title" id="analysisModalLabel">Analysis Details</h5>
+                    <h5 class="modal-title" id="analysisModalLabel">Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5>Content to Analyze:</h5>
+                    <h5>Content:</h5>
                     <p id="contentToAnalyze" class="border p-2 rounded bg-light"></p>
-                    <h5>Analysis Response:</h5>
-                    <p id="analysisResponse" class="border p-2 rounded bg-light"></p>
-                    <h5>Evaluation Response:</h5>
-                    <p id="evaluationResponse" class="border p-2 rounded bg-light"></p>
+                    <div id="typeSpecificContent">
+                        <!-- Nơi sẽ hiển thị nội dung phân tích hoặc đánh giá -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="downloadResult" class="btn btn-secondary">Download Result</button>
                 </div>
             </div>
         </div>
@@ -69,7 +75,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-    
+
         // Initialize DataTable
         $('#historyTable').DataTable({
             "paging": true,
@@ -79,21 +85,38 @@
             "info": true,
             "autoWidth": false
         });
-    
-        // Xem phân tích
+
+        // Xem chi tiết phân tích hoặc đánh giá
         $(document).on('click', '.view-analysis', function() {
             var id = $(this).data('id');
-    
-            // Gửi yêu cầu AJAX để lấy dữ liệu phân tích
+            var type = $(this).data('type');
+
+            // Gửi yêu cầu AJAX để lấy dữ liệu phân tích/đánh giá
             $.ajax({
                 url: '/analysis-evaluation-history/' + id,
                 method: 'GET',
                 success: function(data) {
                     // Cập nhật nội dung modal
                     $('#contentToAnalyze').html(data.content);
-                    $('#analysisResponse').html(data.analysis);
-                    $('#evaluationResponse').html(data.evaluation);
-                    
+
+                    // Kiểm tra loại và hiển thị nội dung tương ứng
+                    if (type === 'text analysis') {
+                        $('#typeSpecificContent').html('<h5>Analysis Response:</h5>' + data.analysis);
+                    } else if (type === 'text evaluation') {
+                        $('#typeSpecificContent').html('<h5>Evaluation Response:</h5>' + data.evaluation);
+                    }
+
+                    // Gán sự kiện tải xuống với nội dung tùy theo loại
+                    $('#downloadResult').off('click').on('click', function() {
+                        var filename = type.replace(' ', '_') + '_result_' + id + '.txt';
+                        var content = type === 'text analysis' ? data.analysis : data.evaluation;
+                        
+                        // Loại bỏ toàn bộ HTML trong dữ liệu trước khi tải xuống
+                        content = removeHtmlTags(content);
+                        
+                        downloadFile(filename, content);
+                    });
+
                     // Hiện modal
                     $('#analysisModal').modal('show');
                 },
@@ -103,7 +126,7 @@
                 }
             });
         });
-    
+
         // Xóa dữ liệu
         $(document).on('click', '.delete-history', function() {
             var id = $(this).data('id');
@@ -137,6 +160,26 @@
                 } 
             });
         });
+
+        // Hàm tải xuống file
+        function downloadFile(filename, content) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
+        // Hàm loại bỏ HTML trong nội dung
+        function removeHtmlTags(input) {
+            var doc = new DOMParser().parseFromString(input, 'text/html');
+            return doc.body.textContent || "";
+        }
     });
-    </script>
-    
+</script>
+

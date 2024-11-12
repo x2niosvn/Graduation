@@ -104,6 +104,57 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 border-warning">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="fas fa-star fa-2x text-warning me-3"></i>
+                        <div>
+                            <h5 class="card-title">Total Suggestions</h5>
+                            <p class="card-text fs-3">{{ $totalSuggestions }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 border-info">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="fas fa-thumbs-up fa-2x text-info me-3"></i>
+                        <div>
+                            <h5 class="card-title">Pending Suggestions</h5>
+                            <p class="card-text fs-3">{{ $totalPendingSuggestions }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 border-info">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="fas fa-thumbs-up fa-2x text-info me-3"></i>
+                        <div>
+                            <h5 class="card-title">Completed Suggestions</h5>
+                            <p class="card-text fs-3">{{ $totalResolvedSuggestions }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4 border-danger">
+                    <div class="card-body d-flex align-items-center">
+                        <i class="fas fa-thumbs-down fa-2x text-danger me-3"></i>
+                        <div>
+                            <h5 class="card-title">Incomplete Suggestions</h5>
+                            <p class="card-text fs-3">{{ $totalResolvedSuggestions }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
 
         <!-- Biểu đồ -->

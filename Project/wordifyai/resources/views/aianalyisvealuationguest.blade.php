@@ -91,13 +91,6 @@
                                 </select>
                             </div>
     
-                            <div class="mb-3">
-                                <label for="detail" class="form-label"><i class="fas fa-cogs me-1"></i> Select Analysis Detail</label>
-                                <select class="form-control" id="detail" name="detail" disabled>
-                                    <option value="simple">Simple</option>
-                                    <option value="detailed">Detailed</option>
-                                </select>
-                            </div>
 
 
 

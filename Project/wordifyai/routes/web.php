@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SuggestionController;
+use App\Http\Controllers\UserDashboardController;
 
 //Đối với user chưa đăng nhập
 Route::get('/text-analysis-evaluation-guest', [OpenAIController::class, 'showAnalysisGuestForm'])->name('text-analysis-evaluation-guest');
@@ -32,11 +33,9 @@ Route::get('/', function () {
 });
 
 //tất cả user đã xác thực
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/dashboard', [UserDashboardController::class, 'show_history'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
