@@ -48,3 +48,12 @@
 |               | **Nguyen Gia Bao**       | - Code chức năng hồ sơ người dùng (cập nhật thông tin, xoá tài khoản) <br> - Triển khai trang chủ cho người dùng   |
 |               | **Nguyen Ha Trung Phong** | - Triển khai chức năng đăng ký, đăng nhập cho người dùng <br> - Phân quyền người dùng (Admin - User) (Trợ giúp: Nguyen Xuan Nam) <br> - Phân route cơ bản cho trang web |
 |               | **Vu Le Manh Cuong**     | - Triển khai, tích hợp API của AI từ bên thứ 3 vào mã nguồn <br> - Hỗ trợ xử lý database                          |
+
+---
+
+| **Giai đoạn** | **Người thực hiện**       | **Nhiệm vụ**                                                                                                        |
+|---------------|---------------------------|---------------------------------------------------------------------------------------------------------------------|
+| **3**         | **Nguyen Xuan Nam**      | - Thêm chức năng phân tích đánh giá văn bản cho người dùng, dựa trên API của OpenAI <br> - Thêm chức năng xem, xoá lịch sử phân tích và đánh giá <br> - Cập nhật cơ sở dữ liệu |
+|               | **Nguyen Gia Bao**       | - Cập nhật chức năng phân tích đánh giá văn bản dựa trên chức năng ban đầu <br> - Xử lý thuật toán phân tích đánh giá văn bản <br> - Tách riêng function phân tích và đánh giá  |
+|               | **Nguyen Ha Trung Phong** | - Tối ưu thời gian phải hồi API <br> - Cập nhật chức năng phân tích đánh giá văn bản dựa trên chức năng ban đầu <br> - Xử lý dữ liệu hiển thị trên giao diện |
+|               | **Vu Le Manh Cuong**     | - Code chức năng phân tích văn bản cho người dùng chưa đăng nhập <br> - Code function xử lý API riêng cho chức năng phân tích văn bản cho người dùng chưa đăng nhập |
