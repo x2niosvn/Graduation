@@ -57,3 +57,12 @@
 |               | **Nguyen Gia Bao**       | - Cập nhật chức năng phân tích đánh giá văn bản dựa trên chức năng ban đầu <br> - Xử lý thuật toán phân tích đánh giá văn bản <br> - Tách riêng function phân tích và đánh giá  |
 |               | **Nguyen Ha Trung Phong** | - Tối ưu thời gian phải hồi API <br> - Cập nhật chức năng phân tích đánh giá văn bản dựa trên chức năng ban đầu <br> - Xử lý dữ liệu hiển thị trên giao diện |
 |               | **Vu Le Manh Cuong**     | - Code chức năng phân tích văn bản cho người dùng chưa đăng nhập <br> - Code function xử lý API riêng cho chức năng phân tích văn bản cho người dùng chưa đăng nhập |
+
+---
+
+| **Giai đoạn** | **Người thực hiện**       | **Nhiệm vụ**                                                                                                        |
+|---------------|---------------------------|---------------------------------------------------------------------------------------------------------------------|
+| **4**         | **Nguyen Xuan Nam**      | - Quản lí lịch sử phân tích và đánh giá (Xem / Xoá) <br> - Code trang chủ Admin-hiển thị số lượng người dùng, số lượng lượt phân tích đánh giá,.... |
+|               | **Nguyen Gia Bao**       | - Thêm, sửa, xóa người dùng (Thêm / Sửa / Xoá) <br> - Sửa quyền cho người dùng (User / Admin) <br> - Tối ưu code  |
+|               | **Nguyen Ha Trung Phong** | - Code chức năng đóng góp cho người dùng ( Đóng góp, góp ý / Hiển thị lịch sử đóng góp ) |
+|               | **Vu Le Manh Cuong**     | - Code chức năng quản lí đóng góp từ người dùng ( Xem danh sách / Duyệt / Từ chối / Phản hồi ) |
