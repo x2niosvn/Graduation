@@ -8,154 +8,177 @@
             </div>
             <div class="card-body">
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4 border-primary">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-users fa-2x text-primary me-3"></i>
-                        <div>
-                            <h5 class="card-title">Total Users</h5>
-                            <p class="card-text fs-3">{{ $userCount }}</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="row">
+
+<!-- Users Section -->
+<div class="col-12 mb-3">
+    <h3 class="text-primary">Users</h3>
+</div>
+<div class="col-md-6">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-users fa-lg"></i>
             </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4 border-success">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-chart-line fa-2x text-success me-3"></i>
-                        <div>
-                            <h5 class="card-title">Total Analysis And Evaluation</h5>
-                            <p class="card-text fs-3">{{ $totalAnalysisAndEvaluations }}</p>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Total Users</h5>
+                <p class="card-text fs-2 fw-bold text-primary mb-0">{{ $userCount }}</p>
             </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 border-warning">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-file-alt fa-2x text-warning me-3"></i>
-                        <div>
-                            <h5 class="card-title">Total Analysis</h5>
-                            <p class="card-text fs-3">{{ $totalAnalysis }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 border-info">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-check-circle fa-2x text-info me-3"></i>
-                        <div>
-                            <h5 class="card-title">Completed Analysis</h5>
-                            <p class="card-text fs-3">{{ $completedAnalysis }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 border-danger">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-times-circle fa-2x text-danger me-3"></i>
-                        <div>
-                            <h5 class="card-title">Incomplete Analysis</h5>
-                            <p class="card-text fs-3">{{ $incompleteAnalysis }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 border-warning">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-star fa-2x text-warning me-3"></i>
-                        <div>
-                            <h5 class="card-title">Total Evaluations</h5>
-                            <p class="card-text fs-3">{{ $totalEvaluations }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 border-info">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-thumbs-up fa-2x text-info me-3"></i>
-                        <div>
-                            <h5 class="card-title">Completed Evaluations</h5>
-                            <p class="card-text fs-3">{{ $completedEvaluations }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card mb-4 border-danger">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-thumbs-down fa-2x text-danger me-3"></i>
-                        <div>
-                            <h5 class="card-title">Incomplete Evaluations</h5>
-                            <p class="card-text fs-3">{{ $incompleteEvaluations }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4 border-warning">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-star fa-2x text-warning me-3"></i>
-                        <div>
-                            <h5 class="card-title">Total Suggestions</h5>
-                            <p class="card-text fs-3">{{ $totalSuggestions }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4 border-info">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-thumbs-up fa-2x text-info me-3"></i>
-                        <div>
-                            <h5 class="card-title">Pending Suggestions</h5>
-                            <p class="card-text fs-3">{{ $totalPendingSuggestions }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4 border-info">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-thumbs-up fa-2x text-info me-3"></i>
-                        <div>
-                            <h5 class="card-title">Completed Suggestions</h5>
-                            <p class="card-text fs-3">{{ $totalResolvedSuggestions }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4 border-danger">
-                    <div class="card-body d-flex align-items-center">
-                        <i class="fas fa-thumbs-down fa-2x text-danger me-3"></i>
-                        <div>
-                            <h5 class="card-title">Incomplete Suggestions</h5>
-                            <p class="card-text fs-3">{{ $totalResolvedSuggestions }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
+    </div>
+</div>
+
+<!-- Analysis Section -->
+<div class="col-12 mb-3">
+    <h3 class="text-warning">Analysis</h3>
+</div>
+<div class="col-md-4">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-file-alt fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Total Analysis</h5>
+                <p class="card-text fs-2 fw-bold text-warning mb-0">{{ $totalAnalysis }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-check-circle fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Completed Analysis</h5>
+                <p class="card-text fs-2 fw-bold text-info mb-0">{{ $completedAnalysis }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-times-circle fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Incomplete Analysis</h5>
+                <p class="card-text fs-2 fw-bold text-danger mb-0">{{ $incompleteAnalysis }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Evaluations Section -->
+<div class="col-12 mb-3">
+    <h3 class="text-success">Evaluations</h3>
+</div>
+<div class="col-md-4">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-star fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Total Evaluations</h5>
+                <p class="card-text fs-2 fw-bold text-warning mb-0">{{ $totalEvaluations }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-thumbs-up fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Completed Evaluations</h5>
+                <p class="card-text fs-2 fw-bold text-info mb-0">{{ $completedEvaluations }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-thumbs-down fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Incomplete Evaluations</h5>
+                <p class="card-text fs-2 fw-bold text-danger mb-0">{{ $incompleteEvaluations }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Suggestions Section -->
+<div class="col-12 mb-3">
+    <h3 class="text-info">Suggestions</h3>
+</div>
+<div class="col-md-6">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-star fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Total Suggestions</h5>
+                <p class="card-text fs-2 fw-bold text-warning mb-0">{{ $totalSuggestions }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-thumbs-up fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">Pending Suggestions</h5>
+                <p class="card-text fs-2 fw-bold text-info mb-0">{{ $totalPendingSuggestions }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- API Section -->
+<div class="col-12 mb-3">
+    <h3 class="text-danger">API Status</h3>
+</div>
+<div class="col-md-6">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-info rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-wallet fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">API Balance</h5>
+                <p class="card-text fs-2 fw-bold text-info mb-0">{{ $balance_full }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="card shadow-lg mb-4 border-0">
+        <div class="card-body d-flex align-items-center bg-light rounded">
+            <div class="icon-container text-white bg-danger rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-chart-line fa-lg"></i>
+            </div>
+            <div>
+                <h5 class="card-title text-muted mb-1">API Used</h5>
+                <p class="card-text fs-2 fw-bold text-danger mb-0">{{ $balance_used }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 
         <!-- Biểu đồ -->
         <div class="row mt-4">

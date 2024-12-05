@@ -117,7 +117,7 @@
                         <a href="{{ route('dashboard') }}" class="btn btn-primary me-2">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-outline-light me-2">Login</a>
-                        <a href="{{ route('register') }}" class="btn btn-light">Register</a>
+                        <a href="{{ route('register') }}" class="btn btn-info">Register</a>
                     @endif
                 </div>
             </div>

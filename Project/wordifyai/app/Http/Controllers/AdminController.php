@@ -181,6 +181,55 @@ class AdminController extends Controller
 
 
 
+function getApiBalance($apiKey)
+{
+    $url = "https://open.keyai.shop/check-balance";
+    $payload = [
+        'api_key' => $apiKey
+    ];
+
+        // Khởi tạo cURL
+        $ch = curl_init();
+
+        // Cấu hình cURL
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload)); // Convert payload sang query string
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/x-www-form-urlencoded' // Định dạng header
+        ]);
+    
+        // Thực hiện yêu cầu và lấy kết quả
+        $response = curl_exec($ch);
+            // Kiểm tra lỗi cURL
+    if (curl_errno($ch)) {
+        curl_close($ch);
+        return [
+            'error' => 'cURL Error: ' . curl_error($ch)
+        ];
+    }
+
+    // Đóng cURL
+    curl_close($ch);
+
+    // Phân tích kết quả trả về
+    $data = json_decode($response, true);
+
+    if (isset($data['balance'])) {
+        return [
+            'balance' => $data['balance'],
+            'used_quota' => $data['used_quota']
+        ];
+    } else {
+        return [
+            'error' => 'Failed to retrieve balance. Response: ' . $response
+        ];
+    }
+
+}
+
+
     public function dashboard()
     {
         $userCount = User::count(); // Số lượng người dùng
@@ -214,7 +263,10 @@ class AdminController extends Controller
         //tổng số góp ý không thể xử lý
         $totalUnresolvedSuggestions = Suggestion::where('status', 'rejected')->count();
 
-
+        $apiKey = 'sk-OvqAynH2w5OCjqboSL12ajRY1GRi23Yis5Wm2XVhPxC0WBur';
+        $balance = $this->getApiBalance($apiKey);
+        $balance_full = $balance['balance'];
+        $balance_used = $balance['used_quota'];
 
         return view('admin.dashboard', compact(
             'userCount',
@@ -228,7 +280,9 @@ class AdminController extends Controller
             'totalSuggestions',
             'totalPendingSuggestions',
             'totalResolvedSuggestions',
-            'totalUnresolvedSuggestions'
+            'totalUnresolvedSuggestions',
+            'balance_full',
+            'balance_used'
         ));
     }
 

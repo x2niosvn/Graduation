@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container py-5">
+    <div class="container">
         <!-- Dashboard Card -->
         <div class="card shadow mb-5">
             <div class="card-header bg-info text-white text-center">
